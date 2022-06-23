@@ -4,6 +4,7 @@ import { NFTContractParsarService } from 'src/app/services/nftcontract_parsar.se
 import { NFTContractStickerService } from 'src/app/services/nftcontract_sticker.service';
 import { NFTContractGalleriaService } from 'src/app/services/nftcontract_galleria.service';
 import { NFTContractDiamondService } from './nftcontract_diamond.service';
+import { ChannelContractService } from './contract_channel.service';
 import { Events } from 'src/app/services/events.service';
 import { UtilService } from './utilService';
 
@@ -15,7 +16,8 @@ export class NFTContractControllerService {
     private nftContractParsarService: NFTContractParsarService,
     private nftContractStickerService: NFTContractStickerService,
     private nftContractGalleriaService: NFTContractGalleriaService,
-    private nftContractDiamondService: NFTContractDiamondService
+    private nftContractDiamondService: NFTContractDiamondService,
+    private channelContractService: ChannelContractService
   ) {
     this.init();
     this.initSubscribeEvent();
@@ -27,6 +29,7 @@ export class NFTContractControllerService {
     this.nftContractDiamondService.init();
     this.nftContractGalleriaService.init();
     this.nftContractDiamondService.init();
+    this.channelContractService.init();
   }
 
   initSubscribeEvent() {
@@ -56,6 +59,10 @@ export class NFTContractControllerService {
 
   getDiamond(): NFTContractDiamondService {
     return this.nftContractDiamondService.getDiamond();
+  }
+
+  getChannel(): ChannelContractService {
+    return this.channelContractService.getChannel();
   }
 
   getAccountAddress() {

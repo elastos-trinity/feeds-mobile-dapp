@@ -15,6 +15,8 @@ import { HiveService } from 'src/app/services/HiveService'
 import { DataHelper } from 'src/app/services/DataHelper';
 import { HiveVaultController } from 'src/app/services/hivevault_controller.service'
 import { UtilService } from 'src/app/services/utilService';
+import { NFTContractControllerService } from 'src/app/services/nftcontract_controller.service';
+
 import _ from 'lodash';
 import SparkMD5 from 'spark-md5';
 
@@ -56,8 +58,8 @@ export class CreatenewfeedPage implements OnInit {
     private ipfsService: IPFSService,
     private dataHelper: DataHelper,
     private hiveVaultController: HiveVaultController,
-    private popupProvider: PopupProvider
-
+    private popupProvider: PopupProvider,
+    private nftContractControllerService: NFTContractControllerService,
   ) { }
 
   ngOnInit() {
@@ -186,6 +188,14 @@ export class CreatenewfeedPage implements OnInit {
       const channelId = await this.hiveVaultController.createChannel(name, desc, this.avatar, JSON.stringify(this.tippingObj))
       await this.hiveVaultController.subscribeChannel(userDid, channelId, userDisplayName);
 
+      const channelUri = ''
+      const tippingAddr = JSON.stringify(this.tippingObj)
+      const category = 'test for channel'
+      const quoteToken = '0x0'
+      const value = '0'
+      console.log("nftContractControllerService: star >>>>>>>>>>>>>>>>>>>>>>>> ")
+      // let result = await this.nftContractControllerService.getChannel().register(channelUri, tippingAddr, category, quoteToken, value)
+      // console.log("result ======== ", result)
       this.native.hideLoading()
       this.native.pop()
     } catch (error) {
