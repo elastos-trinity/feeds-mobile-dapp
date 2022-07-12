@@ -203,7 +203,7 @@ export class ChannelContractService {
         transactionParams,
       );
 
-      this.channelContract.methods.register(category)
+      this.channelContract.methods.register(channelUri, tippingAddr, category, quoteToken, value)
         .send(transactionParams)
         .on('transactionHash', hash => {
           Logger.log(TAG, 'transactionHash', hash);

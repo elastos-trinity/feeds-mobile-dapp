@@ -188,14 +188,14 @@ export class CreatenewfeedPage implements OnInit {
       const channelId = await this.hiveVaultController.createChannel(name, desc, this.avatar, JSON.stringify(this.tippingObj))
       await this.hiveVaultController.subscribeChannel(userDid, channelId, userDisplayName);
 
-      const channelUri = ''
-      const tippingAddr = JSON.stringify(this.tippingObj)
-      const category = 'test for channel'
-      const quoteToken = '0x0'
-      const value = '0'
-      console.log("nftContractControllerService: star >>>>>>>>>>>>>>>>>>>>>>>> ")
-      // let result = await this.nftContractControllerService.getChannel().register(channelUri, tippingAddr, category, quoteToken, value)
-      // console.log("result ======== ", result)
+      // const channelUri = ''
+      // const tippingAddr = JSON.stringify(this.tippingObj)
+      // const category = 'test for channel'
+      // const quoteToken = '0x0'
+      // const value = '0'
+      // console.log("nftContractControllerService: star >>>>>>>>>>>>>>>>>>>>>>>> ")
+      // // let result = await this.nftContractControllerService.getChannel().register(channelUri, tippingAddr, category, quoteToken, value)
+      // // console.log("result ======== ", result)
       this.native.hideLoading()
       this.native.pop()
     } catch (error) {
