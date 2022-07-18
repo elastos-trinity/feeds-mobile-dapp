@@ -282,9 +282,9 @@ export class MyApp {
   }
 
   initConnector() {
-    if (this.isIOSPlatform()) {
-      connectivity.registerConnector(this.localIdentityConnector);
-    }
+    // if (this.isIOSPlatform()) {
+    connectivity.registerConnector(this.localIdentityConnector);
+    // }
     // connectivity.registerConnector(this.localIdentityConnector);
     // To let users use Essentials for his operations:
     connectivity.registerConnector(this.essentialsConnector);

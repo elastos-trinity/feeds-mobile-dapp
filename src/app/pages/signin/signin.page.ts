@@ -10,6 +10,8 @@ import {
   connectivity,
   DID,
 } from '@elastosfoundation/elastos-connectivity-sdk-cordova';
+
+import { LocalIdentityConnector, ILocalIdentityUIHandler, } from '@elastosfoundation/elastos-connector-localidentity-cordova';
 import { localization } from '@elastosfoundation/elastos-connectivity-sdk-cordova';
 import { LanguageService } from 'src/app/services/language.service';
 import { DataHelper } from 'src/app/services/DataHelper';
@@ -32,7 +34,7 @@ export class SigninPage implements OnInit {
   public userName: string = '';
   public emailAddress: string = '';
   public lightThemeType: number = 2;
-  public isShowLearnMore:boolean = false;
+  public isShowLearnMore: boolean = false;
   //hive Auth
   public authorizationStatus: number = null;
   private sid: any = null;
@@ -48,11 +50,11 @@ export class SigninPage implements OnInit {
     private events: Events,
     private zone: NgZone,
     private hiveVaultController: HiveVaultController
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  init() {}
+  init() { }
 
   initTile() {
     this.titleBarService.setTitle(
@@ -67,14 +69,14 @@ export class SigninPage implements OnInit {
     localization.setLanguage(this.languageService.getCurLang());
     this.initTile();
     let isLearnMore = localStorage.getItem('org.elastos.dapp.feeds.isLearnMore') || '';
-    if(isLearnMore === ''){
-        this.isShowLearnMore = true;
-    }else{
-        this.isShowLearnMore = false;
+    if (isLearnMore === '') {
+      this.isShowLearnMore = true;
+    } else {
+      this.isShowLearnMore = false;
     }
     this.addEvents();
     this.authorizationStatus = this.dataHelper.getHiveAuthStatus();
-    if(this.authorizationStatus === 0){
+    if (this.authorizationStatus === 0) {
 
       this.dataHelper.getSigninData().then((signinData) => {
         if (!signinData || !signinData.did) {
@@ -114,22 +116,25 @@ export class SigninPage implements OnInit {
     this.events.unsubscribe(FeedsEvent.PublishType.authEssentialFail);
   }
 
-  ionViewDidEnter() {}
+  ionViewDidEnter() { }
 
   ionViewWillLeave() {
     this.removeEvents();
   }
 
   async signIn() {
+    const a = new LocalIdentityConnector();
+
+
     let connect = this.dataHelper.getNetworkStatus();
     if (connect === FeedsData.ConnState.disconnected) {
       this.native.toastWarn('common.connectionError');
       return;
     }
-
-    connectivity.setActiveConnector(null).then(async () => {
-       await this.doSignin();
-    }).catch((err)=>{
+    connectivity.setActiveConnector('local-identity').then(async (res) => {
+      console.log('111111111111111111', res);
+      await this.doSignin();
+    }).catch((err) => {
     });
   }
 
@@ -141,9 +146,9 @@ export class SigninPage implements OnInit {
           //this.native.setRootRouter('galleriahive');
           this.handleHiveAuth(isSuccess);
           return;
-        }else{
+        } else {
         }
-      }).catch((err)=>{
+      }).catch((err) => {
         this.authorizationStatus = null;
         this.native.toastWarn(err);
       });
@@ -159,6 +164,15 @@ export class SigninPage implements OnInit {
   }
 
   learnMore() {
+
+    //22222
+    connectivity.setActiveConnector('essentials').then(async (res) => {
+      console.log('22222222222222', res);
+      await this.doSignin();
+    }).catch((err) => {
+    });
+
+
     this.isShowLearnMore = true;
   }
 
@@ -184,12 +198,12 @@ export class SigninPage implements OnInit {
 
   handleHiveAuth(userDid: string) {
     this.authorizationStatus = 0;
-    if(this.sid === null){
-      this.sid = setTimeout(()=>{
+    if (this.sid === null) {
+      this.sid = setTimeout(() => {
         this.hiveVaultController.prepareHive(userDid);
         clearTimeout(this.sid);
         this.sid = null;
-      },600)
+      }, 600)
     }
   }
 }
