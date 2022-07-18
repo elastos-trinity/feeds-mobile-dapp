@@ -69,6 +69,10 @@ export class HiveVaultResultParse {
               }
             }
 
+            let pinStatus = FeedsData.PinStatus.NOTPINNED;
+            const remotePinStatus = post.pin_status;
+            if (remotePinStatus) pinStatus = remotePinStatus;
+
             // PostV3
             const postResult: FeedsData.PostV3 = {
               destDid: targetDid,
@@ -81,7 +85,8 @@ export class HiveVaultResultParse {
               type: post.type,
               tag: post.tag,
               proof: '',
-              memo: post.memo
+              memo: post.memo,
+              pinStatus: remotePinStatus
             }
             parseResult.push(postResult);
           }

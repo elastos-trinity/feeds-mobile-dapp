@@ -97,7 +97,7 @@ export class EditPostPage implements OnInit {
     this.clickButton = false;
     this.native.hideLoading();
     this.removeVideo();
-    if(this.isUpdateTab) {
+    if (this.isUpdateTab) {
       this.events.publish(FeedsEvent.PublishType.editPostFinish);
     }
   }
@@ -136,7 +136,7 @@ export class EditPostPage implements OnInit {
       let id = this.destDid + this.channelId + this.postId;
       let video: any = document.getElementById(id + 'videoeditpost') || '';
       let source: any = document.getElementById(id + 'sourceeditpost') || '';
-      if (video !='' && source != '' && !video.paused ) {
+      if (video != '' && source != '' && !video.paused) {
         //判断是否处于暂停状态
         video.pause(); //停止播放
       }
@@ -194,15 +194,15 @@ export class EditPostPage implements OnInit {
     let thumbnailKey = elements.thumbnailPath;
     let type = elements.type;
     //bf54ddadf517be3f1fd1ab264a24e86e@feeds/data/bf54ddadf517be3f1fd1ab264a24e86e
-    let fileName:string = thumbnailKey.split("@")[0];
-    this.hiveVaultController.getV3Data(this.destDid,thumbnailKey,fileName,type)
-    .then((cacheResult)=>{
-      let thumbImage = cacheResult || "";
-      if(thumbImage != ""){
-        this.imgUrl  = thumbImage;
-      }
-    }).catch(()=>{
-    })
+    let fileName: string = thumbnailKey.split("@")[0];
+    this.hiveVaultController.getV3Data(this.destDid, thumbnailKey, fileName, type)
+      .then((cacheResult) => {
+        let thumbImage = cacheResult || "";
+        if (thumbImage != "") {
+          this.imgUrl = thumbImage;
+        }
+      }).catch(() => {
+      })
   }
 
 
@@ -235,10 +235,10 @@ export class EditPostPage implements OnInit {
 
   }
 
-  handleChannelAvatar(channelAvatarUri: string){
-    let fileName:string = channelAvatarUri.split("@")[0];
-    this.hiveVaultController.getV3Data(this.destDid,channelAvatarUri,fileName,"0")
-    .then((result)=>{
+  handleChannelAvatar(channelAvatarUri: string) {
+    let fileName: string = channelAvatarUri.split("@")[0];
+    this.hiveVaultController.getV3Data(this.destDid, channelAvatarUri, fileName, "0")
+      .then((result) => {
         this.channelAvatar = result;
       }).catch((err) => {
       })
@@ -252,7 +252,7 @@ export class EditPostPage implements OnInit {
     let thumbnailKey = elements.thumbnailPath;
     let type = elements.type;
     //bf54ddadf517be3f1fd1ab264a24e86e@feeds/data/bf54ddadf517be3f1fd1ab264a24e86e
-    let fileName:string = thumbnailKey.split("@")[0];
+    let fileName: string = thumbnailKey.split("@")[0];
 
     this.hiveVaultController
       .getV3Data(this.destDid, thumbnailKey, fileName, type)
@@ -287,7 +287,7 @@ export class EditPostPage implements OnInit {
         let videoSrc: string = document
           .getElementById(id + 'sourceeditpost')
           .getAttribute('src');
-          await this.native.setVideoFullScreen(
+        await this.native.setVideoFullScreen(
           postImg,
           videoSrc,
         );
@@ -319,7 +319,7 @@ export class EditPostPage implements OnInit {
     let originKey = elements.originMediaPath;
     let type = elements.type;
     //bf54ddadf517be3f1fd1ab264a24e86e@feeds/data/bf54ddadf517be3f1fd1ab264a24e86e
-    let fileName:string = originKey.split("@")[0];
+    let fileName: string = originKey.split("@")[0];
 
     this.hiveVaultController
       .getV3Data(this.destDid, originKey, fileName, type)
@@ -374,6 +374,7 @@ export class EditPostPage implements OnInit {
       this.hiveVaultController.updatePost(
         this.originPostData,
         content,
+        false,
         "public",
         '',
       ).then((result) => {
@@ -397,10 +398,10 @@ export class EditPostPage implements OnInit {
 
   ionBlur() {
     this.isBorderGradient = false;
-   }
+  }
 
-   ionFocus() {
-     this.isBorderGradient = true;
-   }
+  ionFocus() {
+    this.isBorderGradient = true;
+  }
 }
 

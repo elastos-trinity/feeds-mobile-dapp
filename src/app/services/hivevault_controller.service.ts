@@ -570,7 +570,8 @@ export class HiveVaultController {
           type: type,
           tag: tag,
           proof: proof,
-          memo: memo
+          memo: memo,
+          pinStatus: FeedsData.PinStatus.NOTPINNED
         }
         await this.dataHelper.addPost(postV3);
         resolve(postV3);
@@ -581,7 +582,7 @@ export class HiveVaultController {
     });
   }
 
-  public updatePost(originPost: FeedsData.PostV3, newContent: FeedsData.postContentV3, newType: string = 'public', newTag: string, newStatus: number = FeedsData.PostCommentStatus.edited, newMemo: string = '', newProof: string = ''): Promise<FeedsData.PostV3> {
+  public updatePost(originPost: FeedsData.PostV3, newContent: FeedsData.postContentV3, pinStatus: FeedsData.PinStatus, newType: string = 'public', newTag: string, newStatus: number = FeedsData.PostCommentStatus.edited, newMemo: string = '', newProof: string = ''): Promise<FeedsData.PostV3> {
     return new Promise(async (resolve, reject) => {
       try {
         const newUpdateAt = UtilService.getCurrentTimeNum();
@@ -602,7 +603,8 @@ export class HiveVaultController {
           type: newType,
           tag: newTag,
           proof: newProof,
-          memo: newMemo
+          memo: newMemo,
+          pinStatus: pinStatus
         };
         await this.dataHelper.addPost(postV3);
         resolve(postV3);

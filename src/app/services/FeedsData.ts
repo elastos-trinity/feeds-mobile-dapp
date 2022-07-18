@@ -34,6 +34,11 @@ declare namespace FeedsData {
     ERROR = 'error'
   }
 
+  const enum PinStatus {
+    NOTPINNED = 0,
+    PINNED = 1,
+  }
+
   type ContractEventResult = TransactionHashResult | ReceiptResult | ConfirmationResult | ErrorResult;
 
   type TransactionHashResult = {
@@ -986,7 +991,8 @@ declare namespace FeedsData {
     type: string,
     tag: string,
     proof: string,
-    memo: string
+    memo: string,
+    pinStatus: PinStatus
   }
 
   // 新添加
