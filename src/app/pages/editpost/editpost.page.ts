@@ -371,10 +371,11 @@ export class EditPostPage implements OnInit {
     try {
       let content = _.cloneDeep(this.postData.content);
       content.content = this.editContent;
+      const pinStatus = FeedsData.PinStatus.NOTPINNED;//TODO
       this.hiveVaultController.updatePost(
         this.originPostData,
         content,
-        false,
+        pinStatus,
         "public",
         '',
       ).then((result) => {

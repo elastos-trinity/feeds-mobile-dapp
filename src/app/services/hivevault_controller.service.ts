@@ -586,7 +586,7 @@ export class HiveVaultController {
     return new Promise(async (resolve, reject) => {
       try {
         const newUpdateAt = UtilService.getCurrentTimeNum();
-        const result = await this.hiveVaultApi.updatePost(originPost.postId, originPost.channelId, newType, newTag, JSON.stringify(newContent), newStatus, newUpdateAt, newMemo, newProof);
+        const result = await this.hiveVaultApi.updatePost(originPost.postId, originPost.channelId, newType, newTag, JSON.stringify(newContent), newStatus, newUpdateAt, newMemo, newProof, pinStatus);
         if (!result) {
           const errorMsg = 'Update post error';
           Logger.error(TAG, errorMsg);

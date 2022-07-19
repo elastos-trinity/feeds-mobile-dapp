@@ -4203,7 +4203,7 @@ export class DataHelper {
   }
 
   getHiveAuthStatus() {
-     return this.hiveAuthStatus;
+    return this.hiveAuthStatus;
   }
 
 

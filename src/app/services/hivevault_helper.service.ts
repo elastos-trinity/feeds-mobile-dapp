@@ -446,7 +446,8 @@ export class HiveVaultHelper {
                 "memo": memo,
                 "type": type,
                 "tag": tag,
-                "proof": proof
+                "proof": proof,
+                "pin_status": FeedsData.PinStatus.NOTPINNED
             }
 
             try {
@@ -485,7 +486,7 @@ export class HiveVaultHelper {
     /** publish post end */
 
     /** update post start */
-    private updateDataToPostDB(postId: string, channelId: string, updatedAt: number, newType: string, newTag: string, newContent: string, newStatus: number = FeedsData.PostCommentStatus.edited, newMemo: string, newProof: string,): Promise<UpdateResult> {
+    private updateDataToPostDB(postId: string, channelId: string, updatedAt: number, newType: string, newTag: string, newContent: string, newStatus: number = FeedsData.PostCommentStatus.edited, newMemo: string, newProof: string, pinstatus: FeedsData.PinStatus): Promise<UpdateResult> {
         return new Promise(async (resolve, reject) => {
             const doc =
             {
@@ -495,7 +496,8 @@ export class HiveVaultHelper {
                 "memo": newMemo,
                 "type": newType,
                 "tag": newTag,
-                "proof": newProof
+                "proof": newProof,
+                "pin_status": pinstatus
             }
             const option = new UpdateOptions(false, true)
             let filter = { "channel_id": channelId, "post_id": postId };
@@ -511,10 +513,10 @@ export class HiveVaultHelper {
         });
     }
 
-    private updatePostData(postId: string, channelId: string, newType: string, newTag: string, newContent: string, newStatus: number, newUpdateAt: number, newMemo: string, newProof: string): Promise<any> {
+    private updatePostData(postId: string, channelId: string, newType: string, newTag: string, newContent: string, newStatus: number, newUpdateAt: number, newMemo: string, newProof: string, pinStatus: FeedsData.PinStatus): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
-                const result = this.updateDataToPostDB(postId, channelId, newUpdateAt, newType, newTag, newContent, newStatus, newMemo, newProof)
+                const result = this.updateDataToPostDB(postId, channelId, newUpdateAt, newType, newTag, newContent, newStatus, newMemo, newProof, pinStatus)
                 Logger.log(TAG, 'update post result', result)
                 resolve(result)
             } catch (error) {
@@ -524,8 +526,8 @@ export class HiveVaultHelper {
         })
     }
 
-    updatePost(postId: string, channelId: string, newType: string, newTag: string, newContent: string, newStatus: number, newUpdateAt: number, newMemo: string, newProof: string): Promise<any> {
-        return this.updatePostData(postId, channelId, newType, newTag, newContent, newStatus, newUpdateAt, newMemo, newProof);
+    updatePost(postId: string, channelId: string, newType: string, newTag: string, newContent: string, newStatus: number, newUpdateAt: number, newMemo: string, newProof: string, pinStatus: FeedsData.PinStatus): Promise<any> {
+        return this.updatePostData(postId, channelId, newType, newTag, newContent, newStatus, newUpdateAt, newMemo, newProof, pinStatus);
     }
     /** update post end */
 
