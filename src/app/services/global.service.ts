@@ -5,6 +5,7 @@ import { NFTContractParsarService } from 'src/app/services/nftcontract_parsar.se
 import { NFTContractStickerService } from 'src/app/services/nftcontract_sticker.service';
 import { NFTContractDiamondService } from 'src/app/services/nftcontract_diamond.service';
 import { NFTContractGalleriaService } from 'src/app/services/nftcontract_galleria.service';
+import { ChannelContractService } from 'src/app/services/contract_channel.service';
 import { NFTPersistenceHelper } from 'src/app/services/nft_persistence_helper.service';
 import { NFTContractControllerService } from 'src/app/services/nftcontract_controller.service';
 import { WalletConnectControllerService } from 'src/app/services/walletconnect_controller.service';
@@ -23,6 +24,7 @@ export class GlobalService {
     private nftContractParsarService: NFTContractParsarService,
     private nftContractStickerService: NFTContractStickerService,
     private nftContractGalleriaService: NFTContractGalleriaService,
+    private channelContractService: ChannelContractService,
     private nftContractDiamondService: NFTContractDiamondService,
     private nftPersistenceHelper: NFTPersistenceHelper,
     private nftContractControllerService: NFTContractControllerService,
@@ -37,6 +39,7 @@ export class GlobalService {
       this.ipfsService.setTESTMode(false);
       this.nftContractParsarService.setTestMode(false);
       this.nftContractGalleriaService.setTestMode(false);
+      this.channelContractService.setTestMode(false);
       this.nftContractDiamondService.setTestMode(false);
       this.nftContractStickerService.setTestMode(false);
       this.nftContractDiamondService.setTestMode(false);
@@ -47,6 +50,7 @@ export class GlobalService {
       this.ipfsService.setTESTMode(true);
       this.nftContractParsarService.setTestMode(true);
       this.nftContractGalleriaService.setTestMode(true);
+      this.channelContractService.setTestMode(true);
       this.nftContractDiamondService.setTestMode(true);
       this.nftContractStickerService.setTestMode(true);
       this.nftContractDiamondService.setTestMode(true);

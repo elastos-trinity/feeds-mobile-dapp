@@ -67,6 +67,7 @@ import { NFTContractParsarService } from 'src/app/services/nftcontract_parsar.se
 import { NFTContractStickerService } from 'src/app/services/nftcontract_sticker.service';
 import { NFTContractDiamondService } from 'src/app/services/nftcontract_diamond.service';
 import { NFTContractGalleriaService } from 'src/app/services/nftcontract_galleria.service';
+import { ChannelContractService } from 'src/app/services/contract_channel.service';
 import { NFTContractControllerService } from 'src/app/services/nftcontract_controller.service';
 import { IPFSService } from 'src/app/services/ipfs.service';
 import { NFTPersistenceHelper } from 'src/app/services/nft_persistence_helper.service';
@@ -239,6 +240,7 @@ export function TranslateLoaderFactory() {
     NFTContractStickerService,
     NFTContractDiamondService,
     NFTContractGalleriaService,
+    ChannelContractService,
     NFTContractControllerService,
     WalletConnectControllerService,
     IPFSService,

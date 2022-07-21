@@ -20,6 +20,7 @@ export class Config {
     public static PASAR_ADDRESS: string = '0x02E8AD0687D583e2F6A7e5b82144025f30e26aA0';
     public static DIAMOND_ADDRESS: string = '0x2C8010Ae4121212F836032973919E8AeC9AEaEE5';
     public static GallERIA_ADDRESS: string = '0xE91F413953A82E15B92Ffb93818d8a7b87C3939B';
+    public static CHANNEL_ADDRESS: string = '';
 
     public static CONTRACT_URI = 'https://api.' + Config.BASE_API + '/eth';
     public static CONTRACT_CHAINID: number = 20;
@@ -35,6 +36,7 @@ export class Config {
     public static PASAR_TEST_ADDRESS: string = '0x2652d10A5e525959F7120b56f2D7a9cD0f6ee087';
     public static GallERIA_TEST_ADDRESS: string = '0x8b3c7Fc42d0501e0367d29426421D950f45F5041';
     public static DIAMOND_TEST_ADDRESS: string = '';
+    public static CHANNEL_TEST_ADDRESS: string = '0xc76E72deE2021cc51b094AfcD1e7010c74037bcB';
 
     public static CONTRACT_TEST_URI = 'https://api-testnet.' + Config.BASE_API + '/eth';
     public static CONTRACT_TEST_CHAINID: number = 21;
