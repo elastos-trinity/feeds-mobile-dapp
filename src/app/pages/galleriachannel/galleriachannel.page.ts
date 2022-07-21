@@ -51,7 +51,7 @@ export class GalleriachannelPage implements OnInit {
   private realFile: any = null;
   public maxAvatarSize: number = 5 * 1024 * 1024;
   private didUri: string = null;
-  private nodeId: string = null;
+  private destDid: string = null;
   private channelId: string = null;
   private feedsUrl: string = null;
   public channel: any = {};
@@ -78,14 +78,14 @@ export class GalleriachannelPage implements OnInit {
   ngOnInit() {
 
     this.activatedRoute.queryParams.subscribe((params: Params) => {
-      this.nodeId = params.nodeId;
+      this.destDid = params.destDid;
       this.channelId = params.channelId;
     });
   }
 
   ionViewWillEnter() {
 
-    let server = this.feedsServiceApi.getServerbyNodeId(this.nodeId) || null;
+    let server = this.feedsServiceApi.getServerbyNodeId(this.destDid) || null;
     if (server != null) {
       this.feedsUrl = server.feedsUrl + '/' + this.channelId;
     }
@@ -98,7 +98,7 @@ export class GalleriachannelPage implements OnInit {
       this.tippingAddress["elaMain"] = "";
     }
 
-    this.channel = this.feedService.getChannelFromId(this.nodeId, this.channelId);
+    this.channel = this.feedService.getChannelFromId(this.destDid, this.channelId);
     this.nftName = this.channel["name"];
     this.nftDescription = this.channel["introduction"];
     let galleriachannelAvatar = document.getElementById("galleriachannelAvatar") || null;
@@ -696,7 +696,7 @@ export class GalleriachannelPage implements OnInit {
     channelCollections.entry = galleriaEntry;
     channelCollections.tokenId = tokenId;
     channelCollections.panelId = panelId;
-    channelCollections.nodeId = this.nodeId;
+    channelCollections.nodeId = this.destDid;
     channelCollections.name = this.nftName;
     channelCollections.description = this.nftDescription;
     channelCollections.ownerName = "";

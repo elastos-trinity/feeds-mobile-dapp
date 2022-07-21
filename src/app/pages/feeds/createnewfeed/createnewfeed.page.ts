@@ -69,8 +69,8 @@ export class CreatenewfeedPage implements OnInit {
     this.avatar = this.feedService.parseChannelAvatar(this.channelAvatar);
   }
 
-  mintChannel(nodeId: string, channelId: number) {
-    this.native.navigateForward(['/galleriachannel'], { queryParams: { "nodeId": nodeId, "channelId": channelId } });
+  mintChannel(destDid: string, channelId: number) {
+    this.native.navigateForward(['/galleriachannel'], { queryParams: { "destDid": destDid, "channelId": channelId } });
   }
 
   ionViewDidEnter() { }
