@@ -29,7 +29,41 @@ export class MenuService {
     private hiveVaultController: HiveVaultController
   ) { }
 
-  async showChannelMenu(destDid: string, channelId: string, channelName: string, postId: string) {
+  async showChannelItemMenu(destDid: string, channelId: string, channelName: string, postId: string, isMineAndCanEdit: boolean) {
+    if (this.actionSheetMenu != null) {
+      return;
+    }
+
+    const sharePostButton = this.createSharePostButton(destDid, postId);
+    const cancelButton = this.createCancelButton();
+    let buttons: ActionSheetButton[] = [sharePostButton, cancelButton];
+    if (isMineAndCanEdit) {
+      const editPostButton = this.createEditPostButton(destDid, channelId, channelName, postId);
+      const removePostButton = this.createRemovePostButton(destDid, channelId, channelName, postId);
+      buttons = [sharePostButton, editPostButton, removePostButton, cancelButton];
+    }
+
+    await this.createActionSheetMenu({
+      cssClass: 'editPost',
+      buttons: buttons
+    })
+  }
+
+  async showChannelMenu(destDid: string, channelId: string) {
+    if (this.actionSheetMenu != null) {
+      return;
+    }
+
+    const unsubscribeButton = this.createUnsubscribeButton(destDid, channelId, null);
+    const cancelButton = this.createCancelButton();
+
+    await this.createActionSheetMenu({
+      cssClass: 'editPost',
+      buttons: [unsubscribeButton, cancelButton],
+    });
+  }
+
+  async showOtherChannelMenu(destDid: string, channelId: string, channelName: string, postId: string) {
     if (this.actionSheetMenu != null) {
       return;
     }

@@ -155,7 +155,6 @@ export class ChannelsPage implements OnInit {
     private feedsServiceApi: FeedsServiceApi,
     private dataHelper: DataHelper,
     private hiveVaultController: HiveVaultController
-
   ) { }
 
   async subscribe() {
@@ -211,7 +210,7 @@ export class ChannelsPage implements OnInit {
     }
 
     try {
-      this.menuService.showUnsubscribeMenuWithoutName(this.destDid, this.channelId,);
+      this.menuService.showChannelMenu(this.destDid, this.channelId);
       this.followStatus = false;
       this.initRefresh();
     } catch (error) {
@@ -632,26 +631,17 @@ export class ChannelsPage implements OnInit {
   }
 
   async menuMore(post: FeedsData.PostV3) {
-    // if (!this.feedService.checkPostIsAvalible(post)) return;
-
     this.pauseAllVideo();
     let isMine = await this.checkChannelIsMine();
     this.curPostId = post.postId;
-    if (isMine === 1 && post.status != 1) {
-      this.menuService.showPostDetailMenu(
-        post.destDid,
-        post.channelId,
-        this.channelName,
-        post.postId,
-      );
-    } else {
-      this.menuService.showShareMenu(
-        post.destDid,
-        post.channelId,
-        this.channelName,
-        post.postId,
-      );
-    }
+
+    this.menuService.showChannelItemMenu(
+      post.destDid,
+      post.channelId,
+      this.channelName,
+      post.postId,
+      isMine === 1 && post.status != FeedsData.PostCommentStatus.deleted
+    );
   }
 
   async doRefresh(event: any) {

@@ -791,7 +791,7 @@ export class HomePage implements OnInit {
         post.postId,
       );
     } else {//别人的post
-      this.menuService.showChannelMenu(
+      this.menuService.showOtherChannelMenu(
         post.destDid,
         post.channelId,
         channelName,
