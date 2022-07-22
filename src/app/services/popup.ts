@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AlertController } from '@ionic/angular';
 import { ConfirmdialogComponent } from '../components/confirmdialog/confirmdialog.component';
 import { AlertdialogComponent } from '../components/alertdialog/alertdialog.component';
-import { PopoverController, ModalController} from '@ionic/angular';
+import { PopoverController, ModalController } from '@ionic/angular';
 import { ScanPage } from '../pages/scan/scan.page';
 @Injectable()
 export class PopupProvider {
@@ -14,7 +14,7 @@ export class PopupProvider {
     private translate: TranslateService,
     private popoverController: PopoverController,
     private modalController: ModalController,
-  ) {}
+  ) { }
 
 
   public ionicAlert(
@@ -78,7 +78,7 @@ export class PopupProvider {
     }
   }
 
- async ionicConfirm(
+  async ionicConfirm(
     that: any,
     title: string,
     message: string,
@@ -87,7 +87,7 @@ export class PopupProvider {
     imgageName: string,
     okText?: string,
     cancelText?: string,
-  ) {
+  ): Promise<HTMLIonPopoverElement> {
     let ok = okText || 'common.confirm';
     let cancel = cancelText || 'common.cancel';
     return await this.showConfirmdialog(
@@ -111,7 +111,7 @@ export class PopupProvider {
     imgageName: string,
     okText?: string,
     cancelText?: string,
-  ) {
+  ): Promise<HTMLIonPopoverElement> {
     this.popover = await this.popoverController.create({
       mode: 'ios',
       cssClass: 'ConfirmdialogComponent',
@@ -161,14 +161,14 @@ export class PopupProvider {
     return new Promise<any>(async (resolve, reject) => {
       const modal = await this.modalController.create({
         mode: 'ios',
-        component:ScanPage,
-        cssClass:"transparentBody",
+        component: ScanPage,
+        cssClass: "transparentBody",
         animated: true,
-        showBackdrop:false,
+        showBackdrop: false,
       });
-      modal.onWillDismiss().then((scanText)=>{
-            resolve(scanText);
-      }).catch(()=>{
+      modal.onWillDismiss().then((scanText) => {
+        resolve(scanText);
+      }).catch(() => {
         reject("");
       });
       return await modal.present();

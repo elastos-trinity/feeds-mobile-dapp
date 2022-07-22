@@ -160,7 +160,7 @@ export class ChannelsPage implements OnInit {
 
   async subscribe() {
 
-    if(this.clickButton){
+    if (this.clickButton) {
       return;
     }
 
@@ -211,7 +211,7 @@ export class ChannelsPage implements OnInit {
     }
 
     try {
-      await this.menuService.showUnsubscribeMenuWithoutName(this.destDid, this.channelId,);
+      this.menuService.showUnsubscribeMenuWithoutName(this.destDid, this.channelId,);
       this.followStatus = false;
       this.initRefresh();
     } catch (error) {
@@ -484,7 +484,7 @@ export class ChannelsPage implements OnInit {
   }
 
   ionViewDidEnter() {
-   let appChannels: HTMLBaseElement = document.querySelector("app-channels") || null;
+    let appChannels: HTMLBaseElement = document.querySelector("app-channels") || null;
     if (appChannels != null) {
       appChannels.style.backgroundColor = "#010101";
     }

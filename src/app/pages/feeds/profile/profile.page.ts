@@ -507,10 +507,13 @@ export class ProfilePage implements OnInit {
     });
 
     this.events.subscribe(FeedsEvent.PublishType.updateTitle, () => {
-      if (this.menuService.postDetail != null) {
-        this.menuService.hideActionSheet();
-        this.showMenuMore(this.curItem);
-      }
+      // if (this.menuService.postDetail != null) {
+      //   this.menuService.hideActionSheet();
+      //   this.showMenuMore(this.curItem);
+      // }
+
+      this.menuService.hideActionSheet();
+      this.showMenuMore(this.curItem);
     });
 
     this.events.subscribe(FeedsEvent.PublishType.openRightMenu, () => {

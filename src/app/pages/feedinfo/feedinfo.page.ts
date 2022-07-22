@@ -116,7 +116,7 @@ export class FeedinfoPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    document.body.addEventListener('touchmove',this.preventDefault, {passive: false});
+    document.body.addEventListener('touchmove', this.preventDefault, { passive: false });
     this.theme.setTheme1();
     this.developerMode = this.feedService.getDeveloperMode();
     this.initChannelInfo();
@@ -193,7 +193,7 @@ export class FeedinfoPage implements OnInit {
 
   ionViewWillLeave() {
     this.clickButton = false;
-    document.body.removeEventListener("touchmove",this.preventDefault,false);
+    document.body.removeEventListener("touchmove", this.preventDefault, false);
     this.theme.restTheme();
     this.removeEvents();
   }
@@ -215,7 +215,7 @@ export class FeedinfoPage implements OnInit {
 
   async subscribe() {
 
-    if(this.clickButton) {
+    if (this.clickButton) {
       return;
     }
 
@@ -246,7 +246,7 @@ export class FeedinfoPage implements OnInit {
 
   async unsubscribe() {
     try {
-      await this.menuService.showUnsubscribeMenuWithoutName(this.destDid, this.channelId,);
+      this.menuService.showUnsubscribeMenuWithoutName(this.destDid, this.channelId,);
       this.followStatus = true;
     } catch (error) {
       //TODO show unsubscribe error ui
@@ -306,6 +306,6 @@ export class FeedinfoPage implements OnInit {
       .catch(() => { });
   }
 
-  preventDefault(e:any) { e.preventDefault(); };
+  preventDefault(e: any) { e.preventDefault(); };
 
 }
