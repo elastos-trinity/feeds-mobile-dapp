@@ -14,19 +14,23 @@
     .feedAvatar1{
       display: flex;
       align-items: center;
+      justify-content: center;
       position: relative;
-      border-radius: 50%;
-      width: 110px;
-      height: 110px;
-      background-color: hsla(0,0%,100%,0);
-      margin: 0 auto;
-      border: 3px solid #a067ff;
+      border-radius: 60px;
+      width: 90px;
+      height: 90px;
+      background-color: #161C24;
+      border: 2px solid transparent;
+      background-clip: padding-box, border-box;
+      background-origin: padding-box, border-box;
+      background-image: linear-gradient(to right, #161C24, #161C24), linear-gradient(90deg, #7624FE 0%, #368BFF 100%);
 
-      img{
-        width: 100px;
-        height: 100px;
-        margin: 0 auto;
+      img {
         border-radius: 50%;
+        object-fit: cover;
+        overflow: hidden;
+        height: 80px;
+        width: 80px;
       }
     }
 

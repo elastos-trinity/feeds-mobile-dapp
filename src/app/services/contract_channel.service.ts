@@ -19,10 +19,7 @@ export class ChannelContractService {
   private web3: Web3;
   private channelContract: any;
   private checkTokenInterval: NodeJS.Timer;
-  private checkApprovedInterval: NodeJS.Timer;
-
   private checkTokenNum: number = 0;
-  private checkApprovedNum: number = 0;
 
   constructor(
     private walletConnectControllerService: WalletConnectControllerService,
@@ -90,7 +87,6 @@ export class ChannelContractService {
         await this.web3.eth.estimateGas(txData, (error, gasResult) => {
           txGas = gasResult;
           Logger.log(TAG, 'EstimateGas finish ,gas is', txGas, ', error is', error);
-
         });
         if (!txGas || txGas == 0) {
           Logger.error(TAG, EstimateGasError);
@@ -192,93 +188,9 @@ export class ChannelContractService {
     return await this.channelContract.methods.channelInfo(tokenId).call();
   }
 
-  async isApprovedForAll(_owner, _operator) {
-    if (!this.channelContract) return false;
-    return await this.channelContract.methods
-      .isApprovedForAll(_owner, _operator)
-      .call();
+  cancelMintProcess() {
+    if (!this.checkTokenInterval) return;
+    clearInterval(this.checkTokenInterval);
   }
 
-
-  setApprovalForAll(
-    accountAddress: string,
-    contractAddress: string,
-    approved: boolean,
-  ): Promise<any> {
-    return new Promise(async (resolve, reject) => {
-      try {
-        let isApproved = await this.isApprovedForAll(
-          accountAddress,
-          contractAddress,
-        );
-        Logger.log(TAG, 'Contract isApproved?', isApproved);
-        if (isApproved) {
-          resolve(isApproved);
-          return;
-        }
-
-        const data = this.channelContract.methods
-          .setApprovalForAll(contractAddress, approved)
-          .encodeABI();
-        let transactionParams = await this.createTxParams(data);
-        Logger.log(TAG,
-          'Calling setApprovalForAll smart contract through wallet connect',
-          data,
-          transactionParams,
-        );
-        this.channelContract.methods
-          .setApprovalForAll(contractAddress, approved)
-          .send(transactionParams)
-          .on('transactionHash', hash => {
-            Logger.log(TAG, 'transactionHash', hash);
-            resolve(hash);
-          })
-          .on('receipt', receipt => {
-            Logger.log(TAG, 'receipt', receipt);
-            resolve(receipt);
-          })
-          .on('confirmation', (confirmationNumber, receipt) => {
-            Logger.log(TAG, 'confirmation', confirmationNumber, receipt);
-            resolve(receipt);
-          })
-          .on('error', (error, receipt) => {
-            Logger.error(TAG, 'Mint error,', error, receipt);
-            reject(receipt);
-          });
-
-        this.checkApprovedState(accountAddress, contractAddress, isApproved => {
-          Logger.log(TAG, 'Set approval success', isApproved);
-          resolve(isApproved);
-        });
-      } catch (error) {
-        Logger.error(TAG, 'Set approval error', error);
-        reject(error);
-      }
-    });
-  }
-
-  checkApprovedState(
-    _owner,
-    _operator,
-    callback: (isApproved: boolean) => void,
-  ) {
-    this.checkApprovedNum = 0;
-    this.checkApprovedInterval = setInterval(async () => {
-      if (!this.checkApprovedInterval) return;
-      let isApproved = await this.isApprovedForAll(_owner, _operator);
-      if (isApproved) {
-        Logger.log(TAG, 'Check Approved finish', isApproved);
-        clearInterval(this.checkApprovedInterval);
-        callback(isApproved);
-        this.checkApprovedInterval = null;
-      }
-
-      this.checkApprovedNum++;
-      if (this.checkApprovedNum * Config.CHECK_STATUS_INTERVAL_TIME > Config.WAIT_TIME_MINT) {
-        clearInterval(this.checkApprovedInterval);
-        this.checkApprovedInterval = null;
-        Logger.log(TAG, 'Exit check Approved state by self');
-      }
-    }, Config.CHECK_STATUS_INTERVAL_TIME);
-  }
 }

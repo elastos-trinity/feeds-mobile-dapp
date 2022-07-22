@@ -21,7 +21,8 @@ import { IPFSService } from 'src/app/services/ipfs.service';
 import { MenuService } from 'src/app/services/MenuService';
 import { PasarAssistService } from 'src/app/services/pasar_assist.service';
 import { FeedsServiceApi } from 'src/app/services/api_feedsservice.service';
-
+import { Logger } from 'src/app/services/logger';
+let TAG: string = 'Feeds-feedspreferences';
 @Component({
   selector: 'app-feedspreferences',
   templateUrl: './feedspreferences.page.html',
@@ -86,7 +87,6 @@ export class FeedspreferencesPage implements OnInit {
       this.translate.instant('FeedspreferencesPage.title'),
     );
     this.titleBarService.setTitleBarBackKeyShown(this.titleBar, true);
-    this.titleBarService.setTitleBarMoreMemu(this.titleBar);
   }
 
   ionViewWillEnter() {
@@ -367,7 +367,23 @@ export class FeedspreferencesPage implements OnInit {
   }
 
   async newToggle() {
-    // await this.native.showLoading("common.waitMoment");
+     await this.native.showLoading("common.waitMoment");
+     let accountAddress = this.nftContractControllerService.getAccountAddress() || "";
+     if (accountAddress === '') {
+        this.native.hideLoading();
+        this.native.toastWarn('common.connectWallet');
+        return;
+     }
+
+    let channelInfo = await this.getChannelInfo();
+
+    if( channelInfo === null ){
+      this.native.hideLoading();
+      this.mintChannel();
+       return;
+    }
+
+
     // let channelCollections: FeedsData.ChannelCollections = this.channelCollections || null;
     // if (channelCollections != null && this.curFeedPublicStatus) {
     //   let accountAddress = this.nftContractControllerService.getAccountAddress() || "";
@@ -501,14 +517,16 @@ export class FeedspreferencesPage implements OnInit {
     return channelCollections;
   }
 
-  async isExitStrick(feedsUrl: string) {
+  async getChannelInfo() {
 
     try {
-      let tokenId: string = "0x" + UtilService.SHA256(feedsUrl);
+      let tokenId: string = "0x" + this.channelId;
+      Logger.log(TAG,"tokenId:",tokenId);
       tokenId = UtilService.hex2dec(tokenId);
-      //let tokenInfo = await this.pasarAssistService.searchStickers(tokenId);
-      let tokenInfo = await this.nftContractControllerService.getSticker().tokenInfo(tokenId);
-      if (tokenInfo[0] != '0' && tokenInfo[2] != '0') {
+      Logger.log(TAG,"tokenIdHex2dec:",tokenId);
+      let tokenInfo = await this.nftContractControllerService.getChannel().channelInfo(tokenId);
+      Logger.log(TAG,"tokenInfo:",tokenInfo);
+      if (tokenInfo[0] != '0') {
         return tokenInfo;
       }
       return null;
